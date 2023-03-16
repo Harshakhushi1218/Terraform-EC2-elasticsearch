@@ -1,0 +1,40 @@
+Terraform Download
+https://developer.hashicorp.com/terraform/downloads
+select Linux :-- Amazon Linux
+Download Terraform Zip file
+: wget https://releases.hashicorp.com/terraform/1.4.1/terraform_1.4.1_linux_amd64.zip	
+:Unzip Terraform file
+: mv terraform /usr/local/bin
+
+check the terraform is available or not by using cmd
+: terraform
+
+To give programatic accesss to provide aws resourses:
+Create IAM:
+create a User and click Programatical access authentication.
+provide access to perticular terraform file to access aws.
+save the Access key and Secrete key.
+
+Then Create a terraform file 
+ex: cd myterraformfiles
+# vim awsprovider.tf
+
+provider "aws" {
+  region     = "us-west-2"
+  access_key = "my-access-key"
+  secret_key = "my-secret-key"
+}
+
+# Save the file and # terraform init
+Use Terraform to create EC2 Instance on AWS
+
+resource "aws_instance" "myec2" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "terraformslave"
+  }
+}
+
+To execute: # Terraform apply.
